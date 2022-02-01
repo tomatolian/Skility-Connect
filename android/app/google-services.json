@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "258995622210",
+    "project_id": "platformc-d3e94",
+    "storage_bucket": "platformc-d3e94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258995622210:android:fe72d9e86fb37a9259b8db",
+        "android_client_info": {
+          "package_name": "com.platformc.platformc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258995622210-2ts49abefj5ejkc4et34ulg50d2knkih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF9lQQ23wlIrEuNiYjns2IpVYvLYcoi6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258995622210-2ts49abefj5ejkc4et34ulg50d2knkih.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "258995622210-6ish4fi9u10ho591aef2h07t6q3pjltb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.platformc.platformc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
