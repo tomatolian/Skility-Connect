@@ -102,7 +102,7 @@ class _HomeState extends State<Home> {
                     child: Padding(
                     padding: EdgeInsets.all(4),
                       child:Card(
-                      // color: Colors.greenAccent,
+                      color: (fire_documents[index]['stat'])? Colors.green[100]:Colors.white,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(
                             color:Colors.grey,

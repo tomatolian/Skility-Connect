@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:platformc/header.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:platformc/mainpage.dart';
 class PointSystem extends StatefulWidget {
-  const PointSystem({Key? key,required this.fire_documents}) : super(key: key);
-  final fire_documents;
+  const PointSystem({Key? key,required this.wid,required this.moya}) : super(key: key);
+  final moya;
+  final wid;
   @override
   _PointSystemState createState() => _PointSystemState();
 }
@@ -14,13 +16,14 @@ class _PointSystemState extends State<PointSystem> {
   List<DocumentSnapshot> documentList = [];
   Map replylistmap={};
   List replylist=<String>[];
+  List replylistuid=<String>[];
   List rptf=<bool>[];
   var t='';
   @override
   void initState() {
     super.initState();
     FirebaseFirestore.instance
-        .collection('posts').doc(widget.fire_documents).collection('reply')
+        .collection('posts').doc(widget.wid).collection('reply')
         .get()
         .then((QuerySnapshot<Map<String, dynamic>> snapshot) {
       documentList = snapshot.docs;
@@ -33,6 +36,7 @@ class _PointSystemState extends State<PointSystem> {
       });
       setState(() {
         replylist=replylistmap.values.toList();
+        replylistuid=replylistmap.keys.toList();
         for (var i = 0; i < 10; i++) {
           rptf.add(false);
         }
@@ -80,13 +84,29 @@ class _PointSystemState extends State<PointSystem> {
             setState(() {
               t='選択してください';
             });
+          }else{
+            var uid =replylistuid[rptf.indexOf(true)];
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(uid)
+                .update({
+              'points': FieldValue.increment(100+10*widget.moya),
+            });
+            FirebaseFirestore.instance
+                .collection('posts')
+                .doc(widget.wid)
+                .update({
+              'stat': true,
+            });
+            Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (context) => Mainpage()),
+                    (_) => false);
           }
         },
             ),
         Text(t,style: TextStyle(color: Colors.red),),
       ],
       )
-
     );
   }
 }

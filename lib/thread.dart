@@ -194,7 +194,7 @@ class _threadState extends State<thread> {
                   heroTag: 'hero1',
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PointSystem(fire_documents:widget.fire_documents[widget.index].id)));
+                      MaterialPageRoute(builder: (context) => PointSystem(wid:widget.fire_documents[widget.index].id,moya:widget.fire_documents[widget.index]['vote'])));
 
                 },
                 tooltip: 'Increment',

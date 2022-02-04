@@ -81,7 +81,8 @@ class _PosState extends State<Pos> {
                   'createAt': date,
                   'moyar': [],
                   'poster': FirebaseAuth.instance.currentUser!.uid,
-                  'tags': tags
+                  'tags': tags,
+                  'stat':false
                 });
                 Navigator.of(context).pop();
               },
