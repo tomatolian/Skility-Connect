@@ -104,8 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => RegisterPage()),
-                            (_) => false)
-                    ;
+                            (_) => false);
                   },
                 ),
               )

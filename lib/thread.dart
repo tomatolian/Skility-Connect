@@ -23,6 +23,7 @@ class _threadState extends State<thread> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.fire_documents[widget.index].id);
     _firestore
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -93,7 +94,7 @@ class _threadState extends State<thread> {
                     Expanded(
                       child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: fire_documents1.length, //配列の長さの分だけ作成する。
+                          itemCount: fire_documents1.length,
                           itemBuilder: (context, index) {
                             debugPrint(fire_documents1[index]['name']);
                             return Card(
@@ -174,7 +175,8 @@ class _threadState extends State<thread> {
                       'vote': 0,
                       'icon': iconpass,
                       'date': date.toString(),
-                      'createAt': date
+                      'createAt': date,
+                      'poster':FirebaseAuth.instance.currentUser!.uid
                     });
                   },
                   child: Text('送信'),
@@ -192,7 +194,7 @@ class _threadState extends State<thread> {
                   heroTag: 'hero1',
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PointSystem()));
+                      MaterialPageRoute(builder: (context) => PointSystem(fire_documents:widget.fire_documents[widget.index].id)));
 
                 },
                 tooltip: 'Increment',

@@ -18,7 +18,7 @@ class _OtherProfileState extends State<OtherProfile> {
   var intro = '';
   var grade = '';
   var major = '';
-  var icon = 'img/OtherProfile-icon.png';
+  var icon = '';
   List<DocumentSnapshot> documentList = [];
   var myposts=[];
   var mymoya=[];

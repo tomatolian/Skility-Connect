@@ -66,7 +66,10 @@ class _PosState extends State<Pos> {
             ),
             TextButton(
               onPressed: () {
-                var tags = tagController.text.split(',');
+                var tags = [];
+                if (tagController.text.length!=0){
+                  tags = tagController.text.split(',');
+                }
                 var date = DateTime.now();
                 print(date);
                 _firestore.collection('posts').add({
