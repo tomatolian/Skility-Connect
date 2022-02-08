@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:platformc/mainpage.dart';
 import 'package:platformc/main.dart';
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -47,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 decoration: const InputDecoration(labelText: '名前'),
                 onChanged: (String value) {
                   setState(() {
-                    name= value;
+                    name = value;
                   });
                 },
               ),
@@ -83,18 +85,22 @@ class _RegisterPageState extends State<RegisterPage> {
                         email: email,
                         password: password,
                       );
-                      await FirebaseFirestore.instance.collection('users').doc(auth.currentUser!.uid).set({
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(auth.currentUser!.uid)
+                          .set({
                         'name': name,
-                        'major':major,
+                        'major': major,
                         'grade': grade,
                         'icon': 'img/profile-icon.png',
-                        'text':'Hello,Everyone!',
-                        'points':0
+                        'text': 'Hello,Everyone!',
+                        'points': 0
                       });
-                      await Navigator.push(
+                      await Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) =>Mainpage())
-                      );
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()),
+                          (_) => false);
                     } catch (e) {
                       setState(() {
                         infoText = "登録に失敗しました：${e.toString()}";
@@ -109,10 +115,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: OutlinedButton(
                   child: const Text('ログインページへ'),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>MyApp())
-                    );
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyApp()));
                   },
                 ),
               ),

@@ -5,11 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:platformc/pointsystem.dart';
 import 'package:platformc/preservation.dart';
 class thread extends StatefulWidget {
-  thread({Key? key, required this.fire_documents, required this.index})
+  thread({Key? key, required this.fire_documents, required this.index,required this.stat})
       : super(key: key);
   final List<QueryDocumentSnapshot<Object?>> fire_documents;
   final int index;
-
+  final stat;
   @override
   _threadState createState() => _threadState();
 }
@@ -20,10 +20,14 @@ class _threadState extends State<thread> {
   final _firestore = FirebaseFirestore.instance;
   var postername = '';
   var iconpass = '';
+  var tf;
 
   @override
   Widget build(BuildContext context) {
-    print(widget.fire_documents[widget.index].id);
+    setState(() {
+      tf=widget.stat||FirebaseAuth.instance.currentUser!.uid!=widget.fire_documents[widget.index]['poster'];
+      print(tf);
+    });
     _firestore
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -31,7 +35,6 @@ class _threadState extends State<thread> {
         .then((DocumentSnapshot snapshot) {
       postername = snapshot.get('name');
       iconpass = snapshot.get('icon');
-      print(iconpass);
     });
     return Scaffold(
         appBar: Header(
@@ -52,7 +55,7 @@ class _threadState extends State<thread> {
                     return Text('Something went wrong');
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text("Loading");
+                    return Image.asset('img/loading.gif');
                   }
                   var fire_documents1 = snapshot.data!.docs;
                   return Column(children: [
@@ -96,7 +99,6 @@ class _threadState extends State<thread> {
                           shrinkWrap: true,
                           itemCount: fire_documents1.length,
                           itemBuilder: (context, index) {
-                            debugPrint(fire_documents1[index]['name']);
                             return Card(
                                 child: Padding(
                               child: Column(
@@ -153,7 +155,7 @@ class _threadState extends State<thread> {
                         color: Colors.blue,
                       ),
                     ),
-                    hintText: '返信する',
+                    hintText:widget.stat? '回答は締め切られました':'返信する',
                   ),
                 ),
               ),
@@ -163,7 +165,7 @@ class _threadState extends State<thread> {
               child: SizedBox(
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed:  widget.stat? null: () {
                     var date = DateTime.now();
                     _firestore
                         .collection('posts')
@@ -190,21 +192,22 @@ class _threadState extends State<thread> {
             child: Column(mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end
                 ,children: [
-              FloatingActionButton.extended(
-                  heroTag: 'hero1',
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PointSystem(wid:widget.fire_documents[widget.index].id,moya:widget.fire_documents[widget.index]['vote'])));
-
-                },
-                tooltip: 'Increment',
-                icon: Icon(Icons.thumb_up_alt_outlined),
-                label: Text('解決')
-              ),
+                  FloatingActionButton.extended(
+                      backgroundColor:tf? Colors.grey:Colors.blue,
+                        heroTag: 'hero1',
+                        onPressed: tf? null:(){
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => PointSystem(wid:widget.fire_documents[widget.index].id,moya:widget.fire_documents[widget.index]['vote'])));
+                        },
+                        tooltip: 'Increment',
+                        icon: Icon(Icons.thumb_up_alt_outlined),
+                        label: Text('解決')
+                    ),
               Padding(padding: EdgeInsets.all(4)),
               FloatingActionButton.extended(
+                backgroundColor:widget.stat? Colors.grey:Colors.blue,
                 heroTag: 'hero2',
-                onPressed: () {
+                onPressed: widget.stat? null:() {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Preserve()));
                 },

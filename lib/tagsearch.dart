@@ -52,11 +52,13 @@ class _TagSearchState extends State<TagSearch> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => thread(
+                                stat: fire_documents[index]['stat'],
                                 index: index,
                                 fire_documents: fire_documents,
                               )));
                     },
                     child: Card(
+                        color: (fire_documents[index]['stat'])? Colors.green[100]:Colors.white,
                         child: Padding(
                           child: Column(
                             children: [
@@ -98,13 +100,6 @@ class _TagSearchState extends State<TagSearch> {
                                   itemCount: fire_documents[index]['tags'].length,
                                 ),
                               ),
-                              // (fire_documents[index]['tags'].isEmpty)? SizedBox.shrink(): Row(
-                              //   mainAxisSize: MainAxisSize.min,
-                              //   children: <Widget>[
-                              //     fire_documents[index]['tags'].forEach((tag){
-                              //       Text(tag);
-                              //     })
-                              //   ],),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [

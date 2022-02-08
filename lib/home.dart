@@ -95,8 +95,9 @@ class _HomeState extends State<Home> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => thread(
-                                    index: index,
-                                    fire_documents: fire_documents,
+                                stat: fire_documents[index]['stat'],
+                                index: index,
+                                fire_documents: fire_documents,
                                   )));
                     },
                     child: Padding(
