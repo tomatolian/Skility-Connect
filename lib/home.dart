@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
               return Text('Something went wrong');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text("Loading");
+              return Image.asset('img/loading.gif');
             }
             var fire_documents = snapshot.data!.docs;
             print(fire_documents[1]['tags'].length);
